@@ -1,57 +1,36 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
 import { selectFunction } from "../../utils/compute";
-// import React from "react";
 import { Pose } from "@mediapipe/pose";
 import * as cam from "@mediapipe/camera_utils";
 import Webcam from "react-webcam";
-// import { useRef, useEffect } from "react";
-import yoga1 from "../../assets/img/yogapose.png";
-// import { Link } from "react-router-dom";
-// import { Button } from "@material-ui/core";
-
-const styles = {
-  webcam: {
-    position: "absolute",
-    marginRight: "auto",
-    marginLeft: "auto",
-    left: 0,
-    right: 800,
-    top: 200,
-    textAlign: "center",
-    zIndex: 9,
-    width: 960,
-    height: 720,
-  },
-  info: {
-    position: "absolute",
-    margin: "auto",
-    left: 1150,
-    right: 200,
-    top: 270,
-    color: "#05386B",
-    background: "#8EE4AF",
-    textAlign: "center",
-  },
-  back: {
-    position: "absolute",
-    marginRight: "auto",
-    marginLeft: "auto",
-    left: 1700,
-    right: 0,
-    top: 850,
-  },
-};
+import virabhadrasana from "../../assets/img/virabhadrasana.png";
+import trikonasana from "../../assets/img/trikonasana.png";
 
 const YogaPage = () => {
   const router = useRouter();
   const { yoga } = router.query;
+  const [label, setLabel] = useState("");
+  const [imgSource, setImgSource] = useState({
+    src: "https://via.placeholder.com/350",
+  });
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   let camera = null;
 
   var t = new Date().getTime();
+
+  useEffect(() => {
+    if (yoga === "virabhadrasana") {
+      setImgSource(virabhadrasana);
+    } else if (yoga === "") {
+      setImgSource(trikonasana);
+    }
+
+    const lbl = yoga?.charAt(0).toUpperCase() + yoga?.slice(1);
+    setLabel(lbl);
+  }, [yoga]);
 
   useEffect(() => {
     // console.log(selectFunction(canvasRef, yoga));
@@ -68,7 +47,6 @@ const YogaPage = () => {
     });
 
     const onResult = selectFunction(canvasRef, webcamRef, yoga, t);
-    console.log("test here");
     pose.onResults(onResult);
 
     if (
@@ -87,15 +65,20 @@ const YogaPage = () => {
   }, [yoga]);
 
   return (
-    <div>
-      <div>
-        <Webcam ref={webcamRef} style={styles.webcam} />
-        <canvas ref={canvasRef} style={styles.webcam} />
-      </div>
-      <div style={styles.info}>
-        <p>Try to mimic and hold the following pose.</p>
-        <img src={yoga1} alternate="Yoga 1"></img>
-      </div>
+    <div className="flex items-start justify-evenly mt-10">
+      <Webcam
+        ref={webcamRef}
+        className="text-center z-[9] w-[800px] h-[720px] pb-32"
+      />
+      <canvas ref={canvasRef} />
+      <section className="flex flex-col space-y-10 items-center text-white">
+        <h3 className="text-3xl">{label}</h3>
+        <img src={imgSource?.src} width={300} alt={yoga} />
+        <div className="h-24"></div>
+        <p className="italic text-white font-bold">
+          Try to mimic and hold the following pose.
+        </p>
+      </section>
     </div>
   );
 };
