@@ -24,7 +24,7 @@ const YogaPage = () => {
   useEffect(() => {
     if (yoga === "virabhadrasana") {
       setImgSource(virabhadrasana);
-    } else if (yoga === "") {
+    } else if (yoga === "trikonasana") {
       setImgSource(trikonasana);
     }
 
