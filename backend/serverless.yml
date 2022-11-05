@@ -1,0 +1,47 @@
+org: distroinfinity
+app: octo
+service: octo
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  environment:
+    DYNAMODB_CUSTOMER_TABLE: ${self:service}-userTable-${sls:stage}
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:PutItem"
+            - "dynamodb:Get*"
+            - "dynamodb:Scan*"
+            - "dynamodb:UpdateItem"
+            - "dynamodb:DeleteItem"
+          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:service}-userTable-${sls:stage}
+
+functions:
+  # hello:
+  #   handler: "./src/handler.hello"
+  #   events:
+  #     - httpApi:
+  #         path: /
+  #         method: get
+  createCustomer:
+    handler: src/createCustomer.createCustomer
+    events:
+      - httpApi:
+          path: /createUser
+          method: post
+  getCustomers:
+    handler: src/getCustomers.getCustomers
+    events:
+      - httpApi:
+          path: /getUsers
+          method: get
+
+resources:
+  # Cognito
+  # - ${file(resources/cognito-user-pool.yml)}
+  # DynamoDB
+  - ${file(resources/dynamodb-table.yml)}

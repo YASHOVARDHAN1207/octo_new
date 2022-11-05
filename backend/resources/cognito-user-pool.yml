@@ -1,0 +1,57 @@
+Resources:
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      # Generate a name based on the stage
+      UserPoolName: ${self:service}-userpool-${sls:stage}
+      # Set email as an alias
+      UsernameAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      # Schema:
+      #   - Name: name
+      #     Required: true
+      #     Mutable: true
+      #     AttributeDataType: String
+      LambdaConfig:
+        # PreSignUp: "arn:aws:lambda:us-east-2:910714021713:function:bestguru-api-${self:custom.stage}-linkUser"
+        PostConfirmation: "arn:aws:lambda:us-east-1:560742411187:function:octo-dev-createCustomer"
+
+  UserPoolLambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:invokeFunction
+      Principal: cognito-idp.amazonaws.com
+      FunctionName: "arn:aws:lambda:us-east-1:560742411187:function:octo-dev-createCustomer"
+      SourceArn:
+        Fn::GetAtt: [CognitoUserPool, Arn]
+  # UserPoolLinkLambdaInvokePermission:
+  #   Type: AWS::Lambda::Permission
+  #   Properties:
+  #     Action: lambda:invokeFunction
+  #     Principal: cognito-idp.amazonaws.com
+  #     FunctionName: 'arn:aws:lambda:us-east-2:910714021713:function:bestguru-api-${self:custom.stage}-linkUser'
+  #     SourceArn:
+  #      Fn::GetAtt: [CognitoUserPool, Arn]
+
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      # Generate an app client name based on the stage
+      ClientName: ${self:service}-user-pool-client-${sls:stage}
+      UserPoolId:
+        Ref: CognitoUserPool
+      ExplicitAuthFlows:
+        - ADMIN_NO_SRP_AUTH
+      GenerateSecret: false
+
+# Print out the Id of the User Pool that is created
+Outputs:
+  UserPoolId:
+    Value:
+      Ref: CognitoUserPool
+
+  UserPoolClientId:
+    Value:
+      Ref: CognitoUserPoolClient
