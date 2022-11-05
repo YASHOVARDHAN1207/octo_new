@@ -66,11 +66,40 @@ const YogaPage = () => {
 
   return (
     <div className="flex items-start justify-evenly mt-10">
-      <Webcam
-        ref={webcamRef}
-        className="text-center z-[9] w-[800px] h-[720px] pb-32"
-      />
-      <canvas ref={canvasRef} />
+      <div>
+        <Webcam
+          ref={webcamRef}
+          // style={{
+          //   position: "absolute",
+          //   marginRight: "auto",
+          //   marginLeft: "auto",
+          //   left: 0,
+          //   right: 800,
+          //   top: 200,
+          //   textAlign: "center",
+          //   zIndex: 9,
+          //   width: 800,
+          //   height: 600,
+          // }}
+          className="text-center z-[1] w-[800px] h-[720px] pb-32 absolute"
+        />
+        <canvas
+          ref={canvasRef}
+          // style={{
+          //   position: "absolute",
+          //   marginRight: "auto",
+          //   marginLeft: "auto",
+          //   left: 0,
+          //   right: 800,
+          //   top: 200,
+          //   textAlign: "center",
+          //   zIndex: 9,
+          //   width: 800,
+          //   height: 600,
+          // }}
+          className="text-center absolute z-[2] w-[800px] h-[720px] pb-32"
+        />
+      </div>
       <section className="flex flex-col space-y-10 items-center text-white">
         <h3 className="text-3xl">{label}</h3>
         <img src={imgSource?.src} width={300} alt={yoga} />
