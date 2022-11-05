@@ -14,7 +14,7 @@ export default function Home() {
         <h3 className='text-3xl text-gray-50'>Hola</h3>
       </main>
 
-      <footer></footer>
+      <footer className='bg-[#0a0a0b]'></footer>
     </div>
   )
 }
