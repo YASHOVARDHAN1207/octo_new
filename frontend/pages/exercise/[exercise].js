@@ -1,17 +1,14 @@
 import React from "react";
 import { useRouter } from "next/router";
-
 import { Pose } from "@mediapipe/pose";
 import * as cam from "@mediapipe/camera_utils";
 import Webcam from "react-webcam";
 import { useRef, useEffect, useState } from "react";
 import angleBetweenThreePoints from "./../../utils/angle";
-// import { Button } from "@material-ui/core"; /assets/images/bicepcurls.png
 import bicepcurls from "../../assets/img/bicepcurls.png";
 import crunches from "../../assets/img/crunches.png";
 import pushups from "../../assets/img/pushup.png";
 import squats from "../../assets/img/squats.png";
-// import { Link } from "react-router-dom";
 
 const styles = {
   webcam: {
@@ -84,22 +81,14 @@ const exrInfo = {
 let count = 0;
 let dir = 0;
 let angle = 0;
-function Counter(props) {
-  const [exr, setExr] = useState("");
+
+function ExercisePage() {
+  const [label, setLabel] = useState("");
+  const [imgSource, setImgSource] = useState({
+    src: "https://via.placeholder.com/350",
+  });
   const router = useRouter();
-
-  // const {exercise} = router.query
-
-  let imgSource = exr;
-  if (exr === "bicepCurls") {
-    imgSource = bicepcurls;
-  } else if (exr === "squats") {
-    imgSource = squats;
-  } else if (exr === "pushups") {
-    imgSource = pushups;
-  } else if (exr === "crunches") {
-    imgSource = crunches;
-  }
+  const { exercise } = router.query;
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -121,7 +110,7 @@ function Counter(props) {
       //ratios between 0-1, covert them to pixel positions
       const upadatedPos = [];
 
-      const indexArray = exrInfo[exr].index;
+      const indexArray = exrInfo[exercise].index;
 
       for (let i = 0; i < 3; i += 1) {
         upadatedPos.push({
@@ -133,7 +122,7 @@ function Counter(props) {
 
       // Count reps
       //0 is down, 1 is up
-      if (angle > exrInfo[exr].ul) {
+      if (angle > exrInfo[exercise].ul) {
         //console.log("test angle ",angle)
         if (dir === 0) {
           //count.current = count.current + 0.5
@@ -141,7 +130,7 @@ function Counter(props) {
           dir = 1;
         }
       }
-      if (angle < exrInfo[exr].ll) {
+      if (angle < exrInfo[exercise].ll) {
         if (dir === 1) {
           count = count + 1;
           // console.log(count, " ", dir, " increment ", angle);
@@ -178,10 +167,22 @@ function Counter(props) {
   }
 
   useEffect(() => {
+    if (exercise === "bicepCurls") {
+      setLabel("Bicep Curls");
+      setImgSource(bicepcurls);
+    } else if (exercise === "squats") {
+      setLabel("Squats");
+      setImgSource(squats);
+    } else if (exercise === "crunches") {
+      setLabel("Crunches");
+      setImgSource(crunches);
+    } else if (exercise === "pushups") {
+      setLabel("Pushups");
+      setImgSource(pushups);
+    }
+  }, [exercise]);
+  useEffect(() => {
     console.log("rendered");
-
-    let imgSource = router.query;
-    setExr(imgSource.exercise);
     count = 0;
     dir = 0;
     const pose = new Pose({
@@ -212,6 +213,7 @@ function Counter(props) {
       });
       camera.start();
     }
+
   });
   function resetCount() {
     count = 0;
@@ -320,30 +322,20 @@ function Counter(props) {
         />
       </div>
       <section className="flex flex-col mr-2 space-y-10 items-center text-white">
-        <h3 className="text-3xl">Bicep Curls</h3>
-        <img src={imgSource?.src} width={300} alt={exr} />
-        <div className="h-24 flex flex-col items-center space-y-4">
+        <h3 className="text-3xl">{label}</h3>
+        <img src={imgSource?.src} width={300} alt={exercise} />
+        <div className="flex flex-col items-center space-y-4">
           <input
             variant="filled"
             ref={countTextbox}
             value={count}
             textAlign="center"
-            // style={{
-            //   height: 50,
-            //   fontSize: 40,
-            //   width: 80,
-            //   color: "white",
-            //   background: "transparent",
-            // }}
-            className="text-white bg-transparent text-[40px] text-center"
+            readOnly
+            className="text-white bg-transparent text-[40px] text-center focus:outline-none"
           />
 
           <button
-            // style={{ top: 15 }}
-            // size="large"
-            // variant="contained"
-            // color="primary"
-            className=""
+            className="bg-red-400 p-3 rounded-xl transition hover:border hover:bg-transparent  hover:text-red-400 duration-200 hover:border-red-400"
             onClick={resetCount}
           >
             Reset Counter
@@ -357,4 +349,4 @@ function Counter(props) {
   );
 }
 
-export default Counter;
+export default ExercisePage;
