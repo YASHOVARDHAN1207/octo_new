@@ -10,7 +10,8 @@ import { useRouter } from "next/router";
 import SidebarIcon from "./SidebarIcon";
 import logo from "../assets/img/octo_logo.png";
 
-const Sidebar = () => {
+const Sidebar = ({ signOut }) => {
+  const [active, setActive] = useState(false);
   const router = useRouter();
   return (
     <div className="w-64 bg-[#0f0f0f] h-screen flex flex-col">
@@ -45,12 +46,15 @@ const Sidebar = () => {
         cta={true}
         Icon={<PlusIcon className="h-8 w-8" />}
       /> */}
+      {console.log("gvkvul", signOut)}
       <SidebarIcon
+        onClickHandler={signOut}
         active={false}
         end={true}
         label="Logout"
         Icon={<ArrowLeftOnRectangleIcon className="h-8 w-8" />}
       />
+      {/* <button onClick={signOut}>Sign out</button> */}
     </div>
   );
 };
