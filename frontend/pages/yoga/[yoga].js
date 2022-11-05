@@ -66,7 +66,7 @@ const YogaPage = () => {
 
   return (
     <div className="flex items-start justify-evenly mt-10">
-      <div>
+      <div className="grid">
         <Webcam
           ref={webcamRef}
           // style={{
@@ -81,7 +81,7 @@ const YogaPage = () => {
           //   width: 800,
           //   height: 600,
           // }}
-          className="text-center z-[1] w-[800px] h-[720px] pb-32 absolute"
+          className="text-center z-[1] w-[800px] h-[720px] pb-32 grid-cols-1 grid-rows-1"
         />
         <canvas
           ref={canvasRef}
@@ -97,7 +97,7 @@ const YogaPage = () => {
           //   width: 800,
           //   height: 600,
           // }}
-          className="text-center absolute z-[2] w-[800px] h-[720px] pb-32"
+          className="text-center z-[2] w-[800px] h-[720px] pb-32 grid-cols-1 grid-rows-1"
         />
       </div>
       <section className="flex flex-col space-y-10 items-center text-white">
