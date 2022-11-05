@@ -39,9 +39,15 @@ functions:
       - httpApi:
           path: /getUsers
           method: get
+  updateScore:
+    handler: src/updateScore.updateScore
+    events:
+      - httpApi:
+          path: /updateScore
+          method: post
 
 resources:
   # Cognito
-  # - ${file(resources/cognito-user-pool.yml)}
+  - ${file(resources/cognito-user-pool.yml)}
   # DynamoDB
   - ${file(resources/dynamodb-table.yml)}
