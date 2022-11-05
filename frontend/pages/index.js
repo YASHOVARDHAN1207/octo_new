@@ -10,7 +10,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main></main>
+      <main className='h-screen my-4 scrollbar-hide'>
+        <h3 className='text-3xl text-gray-50'>Hola</h3>
+      </main>
 
       <footer></footer>
     </div>
