@@ -10,11 +10,16 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.13",
+    "@mediapipe/camera_utils": "^0.3.1640029074",
+    "@mediapipe/control_utils": "^0.6.1629159505",
+    "@mediapipe/drawing_utils": "^0.3.1620248257",
+    "@mediapipe/pose": "^0.5.1635988162",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",
     "next": "13.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-webcam": "^7.0.1",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
