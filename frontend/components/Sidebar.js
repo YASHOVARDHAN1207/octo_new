@@ -21,7 +21,7 @@ const Sidebar = ({ signOut }) => {
         <img
           src={logo.src}
           alt="Octo_Logo"
-          className="h-10 bg-transparent w-10"
+          className="h-16 bg-transparent w-16"
         />
         <h3 className="pb-4 text-[#e3ffa8] text-4xl font-bold text-center m-5">
           Octo
