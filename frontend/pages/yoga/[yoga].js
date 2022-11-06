@@ -49,7 +49,7 @@ const YogaPage = () => {
       minTrackingConfidence: 0.5,
     });
 
-    const onResult = selectFunction(canvasRef, webcamRef, yoga, t, setTime);
+    const onResult = selectFunction(canvasRef, webcamRef, yoga, t, setTime, targetTime);
     pose.onResults(onResult);
 
     if (

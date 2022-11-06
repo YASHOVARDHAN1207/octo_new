@@ -1,6 +1,13 @@
 import angleBetweenThreePoints from "./../utils/angle";
 
-const selectFunction = (canvasRef, webcamRef, value, t, setTime) => {
+const selectFunction = (
+  canvasRef,
+  webcamRef,
+  value,
+  t,
+  setTime,
+  targetTime
+) => {
   const virabhadrasanaResult = (results) => {
     console.log("Virabhadrasana Result");
     if (results.poseLandmarks) {
@@ -189,7 +196,11 @@ const selectFunction = (canvasRef, webcamRef, value, t, setTime) => {
       //   40
       // );
 
-      setTime(String(((new Date().getTime() - t) / 1000).toFixed(2)));
+      const time = ((new Date().getTime() - t) / 1000).toFixed(2);
+      setTime(time.toString());
+      if (time >= targetTime) {
+        alert("Target Fulfilled Yay!!");
+      }
 
       canvasCtx.restore();
     }

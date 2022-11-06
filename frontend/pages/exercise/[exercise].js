@@ -140,6 +140,9 @@ function ExercisePage() {
       }
 
       //console.log(count.current)
+      if (count >= targetCount) {
+        alert("Yay!! Target Count Achieved")
+      }
       const canvasElement = canvasRef.current;
       const canvasCtx = canvasElement.getContext("2d");
       canvasCtx.save();
