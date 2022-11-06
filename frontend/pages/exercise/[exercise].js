@@ -85,6 +85,7 @@ let angle = 0;
 function ExercisePage() {
   const [label, setLabel] = useState("");
   const [targetCount, setTargetCount] = useState(0);
+  const [showAlert, setShowAlert] = useState(true);
   const [imgSource, setImgSource] = useState({
     src: "https://via.placeholder.com/350",
   });
@@ -141,7 +142,7 @@ function ExercisePage() {
 
       //console.log(count.current)
       if (count >= targetCount) {
-        alert("Yay!! Target Count Achieved")
+        setShowAlert(true);
       }
       const canvasElement = canvasRef.current;
       const canvasCtx = canvasElement.getContext("2d");
@@ -225,7 +226,38 @@ function ExercisePage() {
 
   return (
     <div className="flex items-start justify-around mt-10 mb-4">
+      {/* "Yay!! Target Count Achieved" */}
       <div>
+        <div
+          className="alert alert-success shadow-lg w-52"
+          style={{
+            position: "absolute",
+            marginRight: "auto",
+            marginLeft: "auto",
+            right: 20,
+            left: 600,
+            top: 10,
+            textAlign: "center",
+            zIndex: 9,
+          }}
+        >
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current flex-shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span>Yay!! Target Count Achieved</span>
+          </div>
+        </div>
         <Webcam
           ref={webcamRef}
           style={{
@@ -234,7 +266,7 @@ function ExercisePage() {
             marginLeft: "auto",
             right: 20,
             left: 600,
-            top: 50,
+            top: 80,
             textAlign: "center",
             zIndex: 9,
             width: 800,
@@ -250,7 +282,7 @@ function ExercisePage() {
             marginLeft: "auto",
             right: 0,
             left: 600,
-            top: 50,
+            top: 80,
             textAlign: "center",
             zIndex: 9,
             width: 800,

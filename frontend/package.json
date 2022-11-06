@@ -16,6 +16,7 @@
     "@mediapipe/drawing_utils": "^0.3.1620248257",
     "@mediapipe/pose": "^0.5.1635988162",
     "aws-amplify": "^4.3.43",
+    "daisyui": "^2.38.1",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",
     "next": "13.0.2",
