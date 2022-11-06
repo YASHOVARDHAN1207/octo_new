@@ -15,6 +15,9 @@ const YogaPage = () => {
     src: "https://via.placeholder.com/350",
   });
 
+  const [time, setTime] = useState("0");
+  const [feedback, setFeedback] = useState({ correct: null, text: "" });
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   let camera = null;
@@ -46,7 +49,14 @@ const YogaPage = () => {
       minTrackingConfidence: 0.5,
     });
 
-    const onResult = selectFunction(canvasRef, webcamRef, yoga, t);
+    const onResult = selectFunction(
+      canvasRef,
+      webcamRef,
+      yoga,
+      t,
+      setTime,
+      setFeedback
+    );
     pose.onResults(onResult);
 
     if (
@@ -100,13 +110,35 @@ const YogaPage = () => {
           // className="text-center  w-[800px] h-[720px] pb-32 absolute"
         />
       </div>
-      <section className="flex flex-col mr-2 space-y-10 items-center text-white">
+      <section className="flex flex-col ml-4 space-y-6 items-center text-white">
         <h3 className="text-3xl">{label}</h3>
         <img src={imgSource?.src} width={300} alt={yoga} />
-        <div className="h-24"></div>
         <p className="italic text-white font-bold">
           Try to mimic and hold the following pose.
         </p>
+        <div className="flex items-center flex-col space-y-2 justify-center">
+          <span className="text-gray-100">
+            Posture Correct for {time} seconds
+          </span>
+          <br />
+          <span
+            className={`${
+              feedback.correct === null
+                ? "text-amber-500"
+                : feedback.correct
+                ? "text-green-500"
+                : "text-red-500"
+            }`}
+          >
+            {feedback.text}
+          </span>
+          <button
+            className="flex items-center justify-center p-3 bg-[#e3ffa8] mt-3 rounded-xl transition duration-200 text-black hover:border hover:border-[#e3ffa8] hover:bg-transparent hover:text-[#e3ffa8]"
+            type="button"
+          >
+            Save Progress
+          </button>
+        </div>
       </section>
     </div>
   );

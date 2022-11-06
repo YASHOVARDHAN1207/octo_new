@@ -1,6 +1,13 @@
 import angleBetweenThreePoints from "./../utils/angle";
 
-const selectFunction = (canvasRef, webcamRef, value, t) => {
+const selectFunction = (
+  canvasRef,
+  webcamRef,
+  value,
+  t,
+  setTime,
+  setFeedback
+) => {
   const virabhadrasanaResult = (results) => {
     console.log("Virabhadrasana Result");
     if (results.poseLandmarks) {
@@ -54,29 +61,37 @@ const selectFunction = (canvasRef, webcamRef, value, t) => {
       let inRangeRightHand;
       if (rightHandAngle >= 170 && rightHandAngle <= 190) {
         inRangeRightHand = true;
+        setFeedback({ correct: true, text: "Good Going" });
       } else {
         inRangeRightHand = false;
+        console.log(rightHandAngle - 190);
       }
 
       let inRangeLeftHand;
       if (leftHandAngle >= 170 && leftHandAngle <= 190) {
         inRangeLeftHand = true;
+        setFeedback({ correct: true, text: "Good Going" });
       } else {
         inRangeLeftHand = false;
+        console.log(leftHandAngle - 190);
       }
 
       let inRangeRightLeg;
       if (rightLegAngle >= 170 && rightLegAngle <= 190) {
         inRangeRightLeg = true;
+        setFeedback({ correct: true, text: "Good Going" });
       } else {
         inRangeRightLeg = false;
+        console.log(rightLegAngle - 190);
       }
 
       let inRangeLeftLeg;
       if (leftLegAngle >= 110 && leftLegAngle <= 130) {
         inRangeLeftLeg = true;
+        setFeedback({ correct: true, text: "Good Going" });
       } else {
         inRangeLeftLeg = false;
+        console.log(leftLegAngle - 130);
       }
 
       for (let i = 0; i < 2; i++) {
@@ -171,15 +186,17 @@ const selectFunction = (canvasRef, webcamRef, value, t) => {
         rightLeg[1].y + 20
       );
 
-      canvasCtx.fillStyle = "black";
-      canvasCtx.font = "30px aerial";
-      canvasCtx.fillText(
-        "Seconds holded: ".concat(
-          String(Math.round((new Date().getTime() - t) / 1000))
-        ),
-        10,
-        40
-      );
+      // canvasCtx.fillStyle = "black";
+      // canvasCtx.font = "30px aerial";
+      // canvasCtx.fillText(
+      //   "Seconds holded: ".concat(
+      //     String(Math.round((new Date().getTime() - t) / 1000))
+      //   ),
+      //   10,
+      //   40
+      // );
+
+      setTime(String(((new Date().getTime() - t) / 1000).toFixed(2)));
 
       canvasCtx.restore();
     }
