@@ -199,7 +199,7 @@ const selectFunction = (
       const time = ((new Date().getTime() - t) / 1000).toFixed(2);
       setTime(time.toString());
       if (time >= targetTime) {
-        alert("Target Fulfilled Yay!!");
+        toast.success("Yayy!! Target Count Achieved");
       }
 
       canvasCtx.restore();
@@ -332,20 +332,26 @@ const selectFunction = (
       );
       canvasCtx.fillText(angleBack, back[1].x, back[1].y + 40);
 
-      canvasCtx.font = "30px aerial";
-      canvasCtx.fillText(
-        "Seconds holded: ".concat(
-          String(Math.round((new Date().getTime() - t) / 1000))
-        ),
-        10,
-        40
-      );
+      // canvasCtx.font = "30px aerial";
+      // canvasCtx.fillText(
+      //   "Seconds holded: ".concat(
+      //     String(Math.round((new Date().getTime() - t) / 1000))
+      //   ),
+      //   10,
+      //   40
+      // );
+
+      const time = ((new Date().getTime() - t) / 1000).toFixed(2);
+      setTime(time.toString());
+      if (time >= targetTime) {
+        toast.success("Yayy!! Target Count Achieved");
+      }
 
       canvasCtx.restore();
     }
   };
 
-  console.log(value);
+  // console.log(value);
   if (value === "virabhadrasana") {
     return virabhadrasanaResult;
   } else {

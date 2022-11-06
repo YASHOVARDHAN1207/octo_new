@@ -6,6 +6,7 @@ import { Auth } from "aws-amplify";
 import { Authenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
 import LandingPage from "../components/LandingPage";
+import { Toaster } from "react-hot-toast";
 
 Amplify.configure({
   Auth: {
@@ -42,6 +43,7 @@ function MyApp({ Component, pageProps }) {
                 <div className="flex">
                   <Sidebar signOut={signOut} />
                   {console.log("this is user", user)}
+                  <Toaster />
                   <Component {...pageProps} />
                 </div>
               </div>
