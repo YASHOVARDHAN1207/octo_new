@@ -1,18 +1,11 @@
-import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import Script from "next/script";
 import "../styles/globals.css";
-// import { Amplify, Auth } from "aws-amplify";
-
-// import { withAuthenticator } from "@aws-amplify/ui-react";
-// import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
-
 import "@aws-amplify/ui-react/styles.css";
-
 import { Amplify } from "aws-amplify";
 import { Auth } from "aws-amplify";
-import { AmplifyProvider } from "@aws-amplify/ui-react";
 import { Authenticator } from "@aws-amplify/ui-react";
+import { useEffect, useState } from "react";
+import LandingPage from "../components/LandingPage";
 
 Amplify.configure({
   Auth: {
@@ -34,19 +27,37 @@ Amplify.configure({
 const currentConfig = Auth.configure();
 
 function MyApp({ Component, pageProps }) {
+  const [login, setLogin] = useState(false);
+  useEffect(() => {
+    // setLogin(false);
+  }, []);
+
   return (
-    <div>
-      <Authenticator>
-        {({ signOut, user }) => (
-          <div className="flex flex-col bg-[#0a0a0b]">
-            <div className="flex">
-              <Sidebar signOut={signOut} />
-              {console.log("this is user", user)}
-              <Component {...pageProps} />
-            </div>
-          </div>
-        )}
-      </Authenticator>
+    <div className={`h-screen bg-[#0a0a0b]`}>
+      {login ? (
+        <div>
+          
+          <Authenticator>
+            {({ signOut, user }) => (
+              <div className="flex flex-col bg-[#0a0a0b]">
+                <div className="flex">
+                  <Sidebar signOut={signOut} />
+                  {console.log("this is user", user)}
+                  <Component {...pageProps} />
+                </div>
+              </div>
+            )}
+          </Authenticator>
+          <button
+            className="text-gray-100 font-bold mr-auto ml-auto font-2xl w-full mt-10"
+            onClick={() => setLogin(false)}
+          >
+            Go Back to Home Page
+          </button>
+        </div>
+      ) : (
+        <LandingPage setLogin={setLogin} />
+      )}
     </div>
   );
 }
