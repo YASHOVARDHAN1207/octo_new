@@ -141,8 +141,9 @@ function ExercisePage() {
       }
 
       //console.log(count.current)
-      if (count >= targetCount) {
-        setShowAlert(true);
+      if (count >= targetCount && targetCount !== 0) {
+        // setShowAlert(true);
+        alert("Yayy!! Target Count Achieved");
       }
       const canvasElement = canvasRef.current;
       const canvasCtx = canvasElement.getContext("2d");
@@ -228,36 +229,6 @@ function ExercisePage() {
     <div className="flex items-start justify-around mt-10 mb-4">
       {/* "Yay!! Target Count Achieved" */}
       <div>
-        <div
-          className="alert alert-success shadow-lg w-52"
-          style={{
-            position: "absolute",
-            marginRight: "auto",
-            marginLeft: "auto",
-            right: 20,
-            left: 600,
-            top: 10,
-            textAlign: "center",
-            zIndex: 9,
-          }}
-        >
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="stroke-current flex-shrink-0 h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span>Yay!! Target Count Achieved</span>
-          </div>
-        </div>
         <Webcam
           ref={webcamRef}
           style={{
