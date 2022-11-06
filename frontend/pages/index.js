@@ -4,7 +4,7 @@ import ExerciseCard from "../components/ExerciseCard";
 
 export default function Home() {
   return (
-    <div className="bg-[#0a0a0b]">
+    <div className="h-full bg-[#0a0a0b]">
       <Head>
         <title>Octo</title>
         <meta name="description" content="Octo App" />
@@ -57,10 +57,6 @@ export default function Home() {
           </section>
         </div>
       </main>
-
-      {/* <footer className="w-screen bg-[#0a0a0b]">
-        <span>Hello</span>
-      </footer> */}
     </div>
   );
 }

@@ -68,7 +68,7 @@ const YogaPage = () => {
   }, [yoga]);
 
   return (
-    <div className="flex items-start justify-around mt-10 bg-[#0a0a0b] overflow-y-hidden">
+    <div className="flex items-start justify-around mt-10 mb-4 bg-[#0a0a0b] overflow-y-hidden">
       <div>
         <Webcam
           ref={webcamRef}
@@ -84,7 +84,6 @@ const YogaPage = () => {
             width: 800,
             height: 600,
           }}
-          // className="text-center  w-[800px] h-[720px] pb-32 absolute"
         />
         <canvas
           ref={canvasRef}
@@ -100,7 +99,6 @@ const YogaPage = () => {
             width: 800,
             height: 600,
           }}
-          // className="text-center  w-[800px] h-[720px] pb-32 absolute"
         />
       </div>
       <section className="flex flex-col ml-4 space-y-6 items-center text-white">
@@ -123,7 +121,10 @@ const YogaPage = () => {
                 className="text-white text-[30px] w-[50px] focus:outline-none bg-transparent"
                 onChange={(e) => setTargetTime(parseInt(e.target.value))}
               />
-              <button className="text-[#bdd76a]" type="button">
+              <button
+                className="text-[#bdd76a] text-xl font-bold"
+                type="button"
+              >
                 Set Goal
               </button>
             </div>

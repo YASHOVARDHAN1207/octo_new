@@ -221,7 +221,7 @@ function ExercisePage() {
   }
 
   return (
-    <div className="flex items-start justify-around mt-10">
+    <div className="flex items-start justify-around mt-10 mb-4">
       <div>
         <Webcam
           ref={webcamRef}
@@ -287,10 +287,10 @@ function ExercisePage() {
               type={"number"}
               value={targetCount}
               placeholder="Target Count"
-              className="text-white focus:outline-none"
+              className="text-white text-[30px] w-[50px] focus:outline-none bg-transparent"
               onChange={(e) => setTargetCount(parseInt(e.target.value))}
             />
-            <button className="text-[#bdd76a]" type="button">
+            <button className="text-[#bdd76a] font-bold text-xl" type="button">
               Set Goal
             </button>
           </div>

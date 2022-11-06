@@ -37,6 +37,7 @@ const Sidebar = ({ signOut }) => {
       <SidebarIcon
         active={false}
         label="Statistics"
+        onClickHandler={() => router.push("/statistics")}
         Icon={<ChartBarIcon className="h-8 w-8" />}
       />
       <SidebarIcon
