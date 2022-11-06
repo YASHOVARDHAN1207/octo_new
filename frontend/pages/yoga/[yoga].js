@@ -11,6 +11,7 @@ const YogaPage = () => {
   const router = useRouter();
   const { yoga } = router.query;
   const [label, setLabel] = useState("");
+  const [prog, setProg] = useState(null);
   const [imgSource, setImgSource] = useState({
     src: "https://via.placeholder.com/350",
   });
@@ -30,7 +31,7 @@ const YogaPage = () => {
     } else if (yoga === "trikonasana") {
       setImgSource(trikonasana);
     }
-
+    fetchProgress();
     const lbl = yoga?.charAt(0).toUpperCase() + yoga?.slice(1);
     setLabel(lbl);
   }, [yoga]);
@@ -49,23 +50,43 @@ const YogaPage = () => {
       minTrackingConfidence: 0.5,
     });
 
-    const onResult = selectFunction(canvasRef, webcamRef, yoga, t, setTime, targetTime);
+    const onResult = selectFunction(
+      canvasRef,
+      webcamRef,
+      yoga,
+      t,
+      setTime,
+      targetTime
+    );
     pose.onResults(onResult);
 
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null
     ) {
-      camera = new cam.Camera(webcamRef.current.video, {
-        onFrame: async () => {
-          await pose.send({ image: webcamRef.current.video });
-        },
-        width: 640,
-        height: 480,
-      });
-      camera.start();
+      try {
+        camera = new cam.Camera(webcamRef.current.video, {
+          onFrame: async () => {
+            await pose.send({ image: webcamRef.current.video });
+          },
+          width: 640,
+          height: 480,
+        });
+        camera.start();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [yoga]);
+
+  async function saveProgress() {
+    localStorage.setItem(yoga, JSON.stringify(time));
+  }
+  async function fetchProgress() {
+    const progress = JSON.parse(localStorage.getItem(yoga));
+    console.log("progress is", progress);
+    setProg(progress);
+  }
 
   return (
     <div className="flex items-start justify-around mt-10 mb-4 bg-[#0a0a0b] overflow-y-hidden">
@@ -102,7 +123,9 @@ const YogaPage = () => {
         />
       </div>
       <section className="flex flex-col ml-4 space-y-6 items-center text-white">
-        <h3 className="text-3xl">{label}</h3>
+        <h3 className="text-3xl">{label} </h3>
+        {prog && <h2 className="text-2xl">All time best: {prog}</h2>}
+
         <img src={imgSource?.src} width={300} alt={yoga} />
         <p className="italic text-white font-bold">
           Try to mimic and hold the following pose.
@@ -131,6 +154,7 @@ const YogaPage = () => {
             <button
               className="flex items-center justify-center p-3 bg-[#e3ffa8] mt-3 rounded-xl transition duration-200 text-black hover:border hover:border-[#e3ffa8] hover:bg-transparent hover:text-[#e3ffa8]"
               type="button"
+              onClick={saveProgress}
             >
               Save Progress
             </button>

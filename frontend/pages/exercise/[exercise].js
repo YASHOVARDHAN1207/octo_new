@@ -95,81 +95,86 @@ function ExercisePage() {
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const [prog, setProg] = useState(null);
 
   let camera = null;
   const countTextbox = useRef(null);
 
   function onResult(results) {
-    if (results.poseLandmarks) {
-      const position = results.poseLandmarks;
+    try {
+      if (results.poseLandmarks) {
+        const position = results.poseLandmarks;
 
-      // set height and width of canvas
-      canvasRef.current.width = webcamRef.current.video.videoWidth;
-      canvasRef.current.height = webcamRef.current.video.videoHeight;
+        // set height and width of canvas
+        canvasRef.current.width = webcamRef.current.video.videoWidth;
+        canvasRef.current.height = webcamRef.current.video.videoHeight;
 
-      const width = canvasRef.current.width;
-      const height = canvasRef.current.height;
+        const width = canvasRef.current.width;
+        const height = canvasRef.current.height;
 
-      //ratios between 0-1, covert them to pixel positions
-      const upadatedPos = [];
+        //ratios between 0-1, covert them to pixel positions
+        const upadatedPos = [];
 
-      const indexArray = exrInfo[exercise].index;
+        const indexArray = exrInfo[exercise].index;
 
-      for (let i = 0; i < 3; i += 1) {
-        upadatedPos.push({
-          x: position[indexArray[i]].x * width,
-          y: position[indexArray[i]].y * height,
-        });
-      }
-      angle = Math.round(angleBetweenThreePoints(upadatedPos));
-
-      // Count reps
-      //0 is down, 1 is up
-      if (angle > exrInfo[exercise].ul) {
-        //console.log("test angle ",angle)
-        if (dir === 0) {
-          //count.current = count.current + 0.5
-          // console.log(count, " ", dir, " decrement ", angle);
-          dir = 1;
+        for (let i = 0; i < 3; i += 1) {
+          upadatedPos.push({
+            x: position[indexArray[i]].x * width,
+            y: position[indexArray[i]].y * height,
+          });
         }
-      }
-      if (angle < exrInfo[exercise].ll) {
-        if (dir === 1) {
-          count = count + 1;
-          // console.log(count, " ", dir, " increment ", angle);
-          dir = 0;
+        angle = Math.round(angleBetweenThreePoints(upadatedPos));
+
+        // Count reps
+        //0 is down, 1 is up
+        if (angle > exrInfo[exercise].ul) {
+          //console.log("test angle ",angle)
+          if (dir === 0) {
+            //count.current = count.current + 0.5
+            // console.log(count, " ", dir, " decrement ", angle);
+            dir = 1;
+          }
         }
-      }
+        if (angle < exrInfo[exercise].ll) {
+          if (dir === 1) {
+            count = count + 1;
+            // console.log(count, " ", dir, " increment ", angle);
+            dir = 0;
+          }
+        }
 
-      //console.log(count.current)
-      if (count >= targetCount && targetCount !== 0) {
-        toast.success("Yayy!! Target Count Achieved");
-        count = 0;
-      }
-      const canvasElement = canvasRef.current;
-      const canvasCtx = canvasElement.getContext("2d");
-      canvasCtx.save();
+        //console.log(count.current)
+        if (count >= targetCount && targetCount !== 0) {
+          toast.success("Yayy!! Target Count Achieved");
+          count = 0;
+        }
+        const canvasElement = canvasRef.current;
+        const canvasCtx = canvasElement.getContext("2d");
+        canvasCtx.save();
 
-      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-      //canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height)
+        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        //canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height)
 
-      for (let i = 0; i < 2; i++) {
-        canvasCtx.beginPath();
-        canvasCtx.moveTo(upadatedPos[i].x, upadatedPos[i].y);
-        canvasCtx.lineTo(upadatedPos[i + 1].x, upadatedPos[i + 1].y);
-        canvasCtx.lineWidth = 2;
-        canvasCtx.strokeStyle = "white";
-        canvasCtx.stroke();
+        for (let i = 0; i < 2; i++) {
+          canvasCtx.beginPath();
+          canvasCtx.moveTo(upadatedPos[i].x, upadatedPos[i].y);
+          canvasCtx.lineTo(upadatedPos[i + 1].x, upadatedPos[i + 1].y);
+          canvasCtx.lineWidth = 2;
+          canvasCtx.strokeStyle = "white";
+          canvasCtx.stroke();
+        }
+        for (let i = 0; i < 3; i++) {
+          canvasCtx.beginPath();
+          canvasCtx.arc(upadatedPos[i].x, upadatedPos[i].y, 10, 0, Math.PI * 2);
+          canvasCtx.fillStyle = "#AAFF00";
+          canvasCtx.fill();
+        }
+        canvasCtx.font = "40px aerial";
+        canvasCtx.fillText(angle, upadatedPos[1].x + 10, upadatedPos[1].y + 40);
+        canvasCtx.restore();
       }
-      for (let i = 0; i < 3; i++) {
-        canvasCtx.beginPath();
-        canvasCtx.arc(upadatedPos[i].x, upadatedPos[i].y, 10, 0, Math.PI * 2);
-        canvasCtx.fillStyle = "#AAFF00";
-        canvasCtx.fill();
-      }
-      canvasCtx.font = "40px aerial";
-      canvasCtx.fillText(angle, upadatedPos[1].x + 10, upadatedPos[1].y + 40);
-      canvasCtx.restore();
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -187,6 +192,7 @@ function ExercisePage() {
       setLabel("Pushups");
       setImgSource(pushups);
     }
+    fetchProgress();
   }, [exercise]);
   useEffect(() => {
     console.log("rendered");
@@ -210,20 +216,32 @@ function ExercisePage() {
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null
     ) {
-      camera = new cam.Camera(webcamRef.current.video, {
-        onFrame: async () => {
-          countTextbox.current.value = count;
-          await pose.send({ image: webcamRef.current.video });
-        },
-        width: 640,
-        height: 480,
-      });
-      camera.start();
+      try {
+        camera = new cam.Camera(webcamRef.current.video, {
+          onFrame: async () => {
+            countTextbox.current.value = count;
+            await pose.send({ image: webcamRef.current.video });
+          },
+          width: 640,
+          height: 480,
+        });
+        camera.start();
+      } catch (error) {
+        console.log(error);
+      }
     }
   });
   function resetCount() {
     count = 0;
     dir = 0;
+  }
+  async function saveProgress() {
+    localStorage.setItem(exercise, JSON.stringify(count));
+  }
+  async function fetchProgress() {
+    const progress = JSON.parse(localStorage.getItem(exercise));
+    console.log("progress is", progress);
+    setProg(progress);
   }
 
   return (
@@ -265,6 +283,7 @@ function ExercisePage() {
       </div>
       <section className="flex flex-col mr-2 space-y-10 items-center text-white">
         <h3 className="text-3xl">{label}</h3>
+        {prog != null && <h2 className="text-2xl">All time best: {prog}</h2>}
         <img src={imgSource?.src} width={300} alt={exercise} />
         <div className="flex flex-col items-center space-y-4">
           <input
@@ -285,6 +304,7 @@ function ExercisePage() {
           <button
             className="flex items-center justify-center p-3 bg-[#e3ffa8] mt-3 rounded-xl transition duration-200 text-black hover:border hover:border-[#e3ffa8] hover:bg-transparent hover:text-[#e3ffa8]"
             type="button"
+            onClick={saveProgress}
           >
             Save Progress
           </button>
