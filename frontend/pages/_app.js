@@ -33,13 +33,12 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <div className={`h-screen bg-[#0a0a0b]`}>
+    <div className={`${!login && "h-screen"} bg-[#0a0a0b]`}>
       {login ? (
         <div>
-          
           <Authenticator>
             {({ signOut, user }) => (
-              <div className="flex flex-col bg-[#0a0a0b]">
+              <div className="h-full flex flex-col bg-[#0a0a0b]">
                 <div className="flex">
                   <Sidebar signOut={signOut} />
                   {console.log("this is user", user)}
@@ -48,12 +47,6 @@ function MyApp({ Component, pageProps }) {
               </div>
             )}
           </Authenticator>
-          <button
-            className="text-gray-100 font-bold mr-auto ml-auto font-2xl w-full mt-10"
-            onClick={() => setLogin(false)}
-          >
-            Go Back to Home Page
-          </button>
         </div>
       ) : (
         <LandingPage setLogin={setLogin} />

@@ -4,7 +4,7 @@ import ExerciseCard from "../components/ExerciseCard";
 
 export default function Home() {
   return (
-    <div className="h-full">
+    <div className="bg-[#0a0a0b]">
       <Head>
         <title>Octo</title>
         <meta name="description" content="Octo App" />

@@ -15,7 +15,7 @@ const Sidebar = ({ signOut }) => {
   const [active, setActive] = useState(false);
   const router = useRouter();
   return (
-    <div className="w-64 bg-[#0f0f0f] h-screen flex flex-col">
+    <div className="w-64 bg-[#0f0f0f] h-screen sticky top-0 flex flex-col">
       {/* Logo */}
       <div className="flex items-center justify-center space-x-4">
         <img

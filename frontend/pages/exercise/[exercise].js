@@ -84,6 +84,7 @@ let angle = 0;
 
 function ExercisePage() {
   const [label, setLabel] = useState("");
+  const [targetCount, setTargetCount] = useState(0);
   const [imgSource, setImgSource] = useState({
     src: "https://via.placeholder.com/350",
   });
@@ -213,7 +214,6 @@ function ExercisePage() {
       });
       camera.start();
     }
-
   });
   function resetCount() {
     count = 0;
@@ -221,71 +221,6 @@ function ExercisePage() {
   }
 
   return (
-    // <div>
-    //   <div style={styles.selectBox}>
-    //     <h1>Bicep Curls</h1>
-    //     <img src={imgSource} width="300" alternate="bicepimage"></img>
-    //     <br></br>
-    //     <div style={{ top: 50 }}>
-    //       <h1>Count</h1>
-    //       <input
-    //         variant="filled"
-    //         ref={countTextbox}
-    //         value={count}
-    //         textAlign="center"
-    //         style={{ height: 50, fontSize: 40, width: 80 }}
-    //       />
-    //       <br></br>
-    //       <br></br>
-    //       <button
-    //         // style={{ top: 15 }}
-    //         // size="large"
-    //         // variant="contained"
-    //         // color="primary"
-    //         onClick={resetCount}
-    //       >
-    //         Reset Counter
-    //       </button>
-    //     </div>
-    //   </div>
-    //   <Webcam
-    //     ref={webcamRef}
-    //     style={{
-    //       position: "absolute",
-    //       marginRight: "auto",
-    //       marginLeft: "auto",
-    //       right: 20,
-    //       left: 600,
-    //       top: 50,
-    //       textAlign: "center",
-    //       zIndex: 9,
-    //       width: 800,
-    //       height: 600,
-    //     }}
-    //   />
-    //   <canvas
-    //     ref={canvasRef}
-    //     style={{
-    //       position: "absolute",
-    //       marginRight: "auto",
-    //       marginLeft: "auto",
-    //       right: 0,
-    //       left: 600,
-    //       top: 50,
-    //       textAlign: "center",
-    //       zIndex: 9,
-    //       width: 800,
-    //       height: 600,
-    //     }}
-    //   />
-    //   <div style={styles.back}>
-    //     {/* <Link to="/counter">
-    //       <button size="large" variant="contained" color="primary">
-    //         Back
-    //       </button>
-    //     </Link> */}
-    //   </div>
-    // </div>
     <div className="flex items-start justify-around mt-10">
       <div>
         <Webcam
@@ -340,6 +275,25 @@ function ExercisePage() {
           >
             Reset Counter
           </button>
+          <button
+            className="flex items-center justify-center p-3 bg-[#e3ffa8] mt-3 rounded-xl transition duration-200 text-black hover:border hover:border-[#e3ffa8] hover:bg-transparent hover:text-[#e3ffa8]"
+            type="button"
+          >
+            Save Progress
+          </button>
+
+          <div className="flex flex-row justify-center items-center">
+            <input
+              type={"number"}
+              value={targetCount}
+              placeholder="Target Count"
+              className="text-white focus:outline-none"
+              onChange={(e) => setTargetCount(parseInt(e.target.value))}
+            />
+            <button className="text-[#bdd76a]" type="button">
+              Set Goal
+            </button>
+          </div>
         </div>
         <p className="italic text-white font-bold">
           Try to mimic and hold the following pose.

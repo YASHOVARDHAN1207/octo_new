@@ -1,13 +1,6 @@
 import angleBetweenThreePoints from "./../utils/angle";
 
-const selectFunction = (
-  canvasRef,
-  webcamRef,
-  value,
-  t,
-  setTime,
-  setFeedback
-) => {
+const selectFunction = (canvasRef, webcamRef, value, t, setTime) => {
   const virabhadrasanaResult = (results) => {
     console.log("Virabhadrasana Result");
     if (results.poseLandmarks) {

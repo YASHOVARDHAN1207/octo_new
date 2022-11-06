@@ -16,7 +16,7 @@ const YogaPage = () => {
   });
 
   const [time, setTime] = useState("0");
-  const [feedback, setFeedback] = useState({ correct: null, text: "" });
+  const [targetTime, setTargetTime] = useState(0);
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -49,14 +49,7 @@ const YogaPage = () => {
       minTrackingConfidence: 0.5,
     });
 
-    const onResult = selectFunction(
-      canvasRef,
-      webcamRef,
-      yoga,
-      t,
-      setTime,
-      setFeedback
-    );
+    const onResult = selectFunction(canvasRef, webcamRef, yoga, t, setTime);
     pose.onResults(onResult);
 
     if (
@@ -75,7 +68,7 @@ const YogaPage = () => {
   }, [yoga]);
 
   return (
-    <div className="flex items-start justify-around mt-10">
+    <div className="flex items-start justify-around mt-10 bg-[#0a0a0b] overflow-y-hidden">
       <div>
         <Webcam
           ref={webcamRef}
@@ -117,27 +110,30 @@ const YogaPage = () => {
           Try to mimic and hold the following pose.
         </p>
         <div className="flex items-center flex-col space-y-2 justify-center">
-          <span className="text-gray-100">
-            Posture Correct for {time} seconds
-          </span>
+          <span className="text-gray-100 text-3xl">Posture Correct for</span>
           <br />
-          <span
-            className={`${
-              feedback.correct === null
-                ? "text-amber-500"
-                : feedback.correct
-                ? "text-green-500"
-                : "text-red-500"
-            }`}
-          >
-            {feedback.text}
-          </span>
-          <button
-            className="flex items-center justify-center p-3 bg-[#e3ffa8] mt-3 rounded-xl transition duration-200 text-black hover:border hover:border-[#e3ffa8] hover:bg-transparent hover:text-[#e3ffa8]"
-            type="button"
-          >
-            Save Progress
-          </button>
+          <span className="text-gray-100 text-4xl">{time} seconds</span>
+          <br />
+          <div className="flex flex-row space-x-4 justify-center items-center">
+            <div className="flex flex-row justify-center space-x-3 items-center">
+              <input
+                type={"number"}
+                value={targetTime}
+                placeholder="Target (in seconds)"
+                className="text-white text-[30px] w-[50px] focus:outline-none bg-transparent"
+                onChange={(e) => setTargetTime(parseInt(e.target.value))}
+              />
+              <button className="text-[#bdd76a]" type="button">
+                Set Goal
+              </button>
+            </div>
+            <button
+              className="flex items-center justify-center p-3 bg-[#e3ffa8] mt-3 rounded-xl transition duration-200 text-black hover:border hover:border-[#e3ffa8] hover:bg-transparent hover:text-[#e3ffa8]"
+              type="button"
+            >
+              Save Progress
+            </button>
+          </div>
         </div>
       </section>
     </div>
