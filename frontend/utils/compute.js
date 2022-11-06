@@ -198,8 +198,10 @@ const selectFunction = (
 
       const time = ((new Date().getTime() - t) / 1000).toFixed(2);
       setTime(time.toString());
-      if (time >= targetTime) {
+      if (time >= targetTime && targetTime !== 0) {
         toast.success("Yayy!! Target Count Achieved");
+        setTime("0");
+        time = 0;
       }
 
       canvasCtx.restore();
@@ -343,8 +345,10 @@ const selectFunction = (
 
       const time = ((new Date().getTime() - t) / 1000).toFixed(2);
       setTime(time.toString());
-      if (time >= targetTime) {
+      if (time >= targetTime && targetTime !== 0) {
         toast.success("Yayy!! Target Count Achieved");
+        setTime("");
+        time = 0;
       }
 
       canvasCtx.restore();

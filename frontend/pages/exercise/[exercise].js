@@ -9,7 +9,7 @@ import bicepcurls from "../../assets/img/bicepcurls.png";
 import crunches from "../../assets/img/crunches.png";
 import pushups from "../../assets/img/pushup.png";
 import squats from "../../assets/img/squats.png";
-import {toast} from 'react-hot-toast'
+import { toast } from "react-hot-toast";
 
 const styles = {
   webcam: {
@@ -143,9 +143,8 @@ function ExercisePage() {
 
       //console.log(count.current)
       if (count >= targetCount && targetCount !== 0) {
-        // setShowAlert(true);
-        // alert("Yayy!! Target Count Achieved");
-        toast.success("Yayy!! Target Count Achieved")
+        toast.success("Yayy!! Target Count Achieved");
+        count = 0;
       }
       const canvasElement = canvasRef.current;
       const canvasCtx = canvasElement.getContext("2d");
