@@ -6,6 +6,8 @@ import * as cam from "@mediapipe/camera_utils";
 import Webcam from "react-webcam";
 import virabhadrasana from "../../assets/img/virabhadrasana.png";
 import trikonasana from "../../assets/img/trikonasana.png";
+import HealthStats from "../../components/HealthStats";
+import RandomCounter from "../../components/counter";
 
 const YogaPage = () => {
   const router = useRouter();
@@ -122,14 +124,18 @@ const YogaPage = () => {
           }}
         />
       </div>
+      <div></div>
       <section className="flex flex-col ml-4 space-y-6 items-center text-white">
         <h3 className="text-3xl">{label} </h3>
-        {prog && <h2 className="text-2xl">All time best: {prog}</h2>}
 
+        {prog && <h2 className="text-2xl">All time best: {prog}</h2>}
+        <div style={{ display: "flex" }}>
+          <HealthStats></HealthStats>
+        </div>
         <img src={imgSource?.src} width={300} alt={yoga} />
-        <p className="italic text-white font-bold">
+        {/* <p className="italic text-white font-bold">
           Try to mimic and hold the following pose.
-        </p>
+        </p> */}
         <div className="flex items-center flex-col space-y-2 justify-center">
           <span className="text-gray-100 text-3xl">Posture Correct for</span>
           <br />
@@ -159,6 +165,7 @@ const YogaPage = () => {
               Save Progress
             </button>
           </div>
+          <div></div>
         </div>
       </section>
     </div>

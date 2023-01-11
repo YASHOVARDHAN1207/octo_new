@@ -145,7 +145,7 @@ function ExercisePage() {
 
         //console.log(count.current)
         if (count >= targetCount && targetCount !== 0) {
-          toast.success("Yayy!! Target Count Achieved");
+          toast.success("Yayy!! Target Count Achieved. Added 2 Health Coins");
           count = 0;
         }
         const canvasElement = canvasRef.current;

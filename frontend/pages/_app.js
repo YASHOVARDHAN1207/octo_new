@@ -35,8 +35,17 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <div className={`${!login && "h-screen"} bg-[#0a0a0b]`}>
-      {login ? (
+      <div className="h-full flex flex-col bg-[#0a0a0b]">
+        <div className="flex">
+          <Sidebar />
+          {/* {console.log("this is user", user)} */}
+          <Toaster />
+          <Component {...pageProps} />
+        </div>
+      </div>
+      {/* {login ? (
         <div>
+        //signOut={signOut}
           <Authenticator>
             {({ signOut, user }) => (
               <div className="h-full flex flex-col bg-[#0a0a0b]">
@@ -52,7 +61,7 @@ function MyApp({ Component, pageProps }) {
         </div>
       ) : (
         <LandingPage setLogin={setLogin} />
-      )}
+      )} */}
     </div>
   );
 }

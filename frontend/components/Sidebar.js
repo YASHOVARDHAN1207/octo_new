@@ -6,13 +6,16 @@ import {
   ArrowLeftOnRectangleIcon,
   PlusIcon,
   FireIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import SidebarIcon from "./SidebarIcon";
 import logo from "../assets/img/octo_logo.png";
+import CryptoSwapModal from "./swapModal";
 
 const Sidebar = ({ signOut }) => {
   const [active, setActive] = useState(false);
+
   const router = useRouter();
   return (
     <div className="w-64 bg-[#0f0f0f] h-screen sticky top-0 flex flex-col">
@@ -46,12 +49,30 @@ const Sidebar = ({ signOut }) => {
         Icon={<UserIcon className="h-8 w-8" />}
         label="Profile"
       />
+      <SidebarIcon
+        active={false}
+        onClickHandler={() => router.push("/explore")}
+        Icon={<UserIcon className="h-8 w-8" />}
+        label="Explore all"
+      />
       {/* <SidebarIcon
         active={false}
         onClickHandler={() => router.push("/exercise/selection")}
         cta={true}
         Icon={<PlusIcon className="h-8 w-8" />}
       /> */}
+
+      <CryptoSwapModal></CryptoSwapModal>
+      <button
+        type="button"
+        className={
+          "flex items-center hover:rounded-md rounded-xl space-x-4 hover:bg-[#0a0a0b] text-orange-500 justify-start hover:cursor-pointer transition-all duration-200 px-3 py-2 m-4 mt-auto"
+        }
+      >
+        <CurrencyDollarIcon className="h-8 w-8 text-orange-500" />
+        <span className={`text-lg`}>18</span>
+        <span className="ml-auto">Health Coins</span>
+      </button>
       <button
         type="button"
         className={
@@ -59,7 +80,7 @@ const Sidebar = ({ signOut }) => {
         }
       >
         <FireIcon className="h-8 w-8 text-orange-500" />
-        <span className={`text-lg`}>0</span>
+        <span className={`text-lg`}>2</span>
         <span className="ml-auto">Day Streak</span>
       </button>
       <SidebarIcon

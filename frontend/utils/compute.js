@@ -204,7 +204,7 @@ const selectFunction = (
         const time = ((new Date().getTime() - t) / 1000).toFixed(2);
         setTime(time.toString());
         if (time >= targetTime && targetTime !== 0) {
-          toast.success("Yayy!! Target Count Achieved");
+          toast.success("Yayy!! Target Count Achieved. Added 2 Health Coins");
           setTime("0");
           time = 0;
         }
@@ -355,7 +355,7 @@ const selectFunction = (
         const time = ((new Date().getTime() - t) / 1000).toFixed(2);
         setTime(time.toString());
         if (time >= targetTime && targetTime !== 0) {
-          toast.success("Yayy!! Target Count Achieved");
+          toast.success("Yayy!! Target Count Achieved. Added 2 Health Coins");
           setTime("");
           time = 0;
         }
