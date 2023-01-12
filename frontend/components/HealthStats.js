@@ -17,8 +17,8 @@ function HealthStats({ heartRate, bloodPressure }) {
         <div className="text-lg font-bold text-gray-700 mr-4">Blood Pres:</div>
         <div className=" font-bold text-blue-600" style={{ display: "flex" }}>
           {/* {bloodPressure} */}
-          <RandomCounter min={115} max={125} interval={900}></RandomCounter>/
-          <RandomCounter min={75} max={85} interval={1000}></RandomCounter>
+          <RandomCounter min={115} max={120} interval={900}></RandomCounter>/
+          <RandomCounter min={75} max={80} interval={1500}></RandomCounter>
         </div>
       </div>
 

@@ -15,6 +15,7 @@ import CryptoSwapModal from "./swapModal";
 
 const Sidebar = ({ signOut }) => {
   const [active, setActive] = useState(false);
+  const [coins, setCoins] = useState(10);
 
   const router = useRouter();
   return (
@@ -70,7 +71,7 @@ const Sidebar = ({ signOut }) => {
         }
       >
         <CurrencyDollarIcon className="h-8 w-8 text-orange-500" />
-        <span className={`text-lg`}>18</span>
+        <span className={`text-lg`}>{coins}</span>
         <span className="ml-auto">Health Coins</span>
       </button>
       <button
