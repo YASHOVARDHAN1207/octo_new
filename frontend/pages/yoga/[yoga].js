@@ -140,7 +140,7 @@ const YogaPage = () => {
           <span className="text-gray-100 text-3xl">Posture Correct for</span>
           <br />
           <span className="text-gray-100 text-4xl">{time} seconds</span>
-          <br />
+          <br /> 
           <div className="flex flex-row space-x-4 justify-center items-center">
             <div className="flex flex-row justify-center space-x-3 items-center">
               <input
