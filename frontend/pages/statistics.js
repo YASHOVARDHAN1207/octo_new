@@ -1,13 +1,138 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const StatisticsPage = () => {
+  const [yogaData, setYogaData] = useState([]);
+  const [exerciseData, setExerciseData] = useState([]);
+
+  useEffect(() => {
+    const yogaStats = JSON.parse(sessionStorage.getItem("yoga_stats")) || [];
+    const exerciseStats = JSON.parse(sessionStorage.getItem("exercise_stats")) || [];
+    setYogaData(yogaStats);
+    setExerciseData(exerciseStats);
+  }, []);
+
+  const groupBy = (data, keyName) => {
+    const grouped = {};
+    data.forEach((entry) => {
+      const key = entry[keyName];
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(entry);
+    });
+    return grouped;
+  };
+
+  const groupedYoga = groupBy(yogaData, "yoga");
+  const groupedExercise = groupBy(exerciseData, "exercise");
+
   return (
-    <div className="mr-auto ml-auto mt-auto mb-auto w-full">
-      {/* Leaderboard Section (Currently in center only) */}
-      {/* Graphs and Sections (Column wise division when implemented ) */}
-      <h3 className="text-center text-[#e3ffa8] font-bold text-4xl">
-        Coming Soon...
-      </h3>
+    <div className="min-h-screen bg-[#0a0a0b] text-white p-10">
+      {/* Yoga Statistics */}
+      <h1 className="text-4xl text-center mb-10 font-bold text-[#e3ffa8]">
+        🧘 Your Yoga Statistics
+      </h1>
+
+      {Object.keys(groupedYoga).length === 0 ? (
+        <p className="text-center text-xl text-gray-400">
+          No yoga data yet. Practice a pose to see stats here!
+        </p>
+      ) : (
+        Object.entries(groupedYoga).map(([pose, entries]) => (
+          <div
+            key={pose}
+            className="mb-10 border border-gray-700 rounded-xl bg-[#1a1a1d] p-6 shadow-lg"
+          >
+            <h2 className="text-2xl font-semibold text-[#bdd76a] mb-2 capitalize">
+              {pose}
+            </h2>
+            <p>Total Sessions: <span className="text-[#e3ffa8]">{entries.length}</span></p>
+            <p>
+              Best Time:{" "}
+              <span className="text-[#e3ffa8]">
+                {Math.max(...entries.map((e) => e.time))} seconds
+              </span>
+            </p>
+            <p>
+              Total Time Practiced:{" "}
+              <span className="text-[#e3ffa8]">
+                {entries.reduce((acc, e) => acc + e.time, 0)} seconds
+              </span>
+            </p>
+
+            <table className="w-full mt-5 text-left text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-gray-600">
+                  <th className="pb-2">Date</th>
+                  <th className="pb-2">Time Held (s)</th>
+                  <th className="pb-2">Target Time (s)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {entries.map((entry, index) => (
+                  <tr key={index} className="border-b border-gray-800">
+                    <td className="py-2">{entry.date}</td>
+                    <td className="py-2">{entry.time}</td>
+                    <td className="py-2">{entry.target || "N/A"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))
+      )}
+
+      {/* Exercise Statistics */}
+      <h1 className="text-4xl text-center my-10 font-bold text-[#e3ffa8]">
+        🏋️‍♂️ Your Exercise Statistics
+      </h1>
+
+      {Object.keys(groupedExercise).length === 0 ? (
+        <p className="text-center text-xl text-gray-400">
+          No exercise data yet. Complete an exercise to see stats here!
+        </p>
+      ) : (
+        Object.entries(groupedExercise).map(([exercise, entries]) => (
+          <div
+            key={exercise}
+            className="mb-10 border border-gray-700 rounded-xl bg-[#1a1a1d] p-6 shadow-lg"
+          >
+            <h2 className="text-2xl font-semibold text-[#bdd76a] mb-2 capitalize">
+              {exercise}
+            </h2>
+            <p>Total Sessions: <span className="text-[#e3ffa8]">{entries.length}</span></p>
+            <p>
+              Best Count:{" "}
+              <span className="text-[#e3ffa8]">
+                {Math.max(...entries.map((e) => e.count))}
+              </span>
+            </p>
+            <p>
+              Total Reps Completed:{" "}
+              <span className="text-[#e3ffa8]">
+                {entries.reduce((acc, e) => acc + e.count, 0)}
+              </span>
+            </p>
+
+            <table className="w-full mt-5 text-left text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-gray-600">
+                  <th className="pb-2">Date</th>
+                  <th className="pb-2">Reps Done</th>
+                  <th className="pb-2">Target</th>
+                </tr>
+              </thead>
+              <tbody>
+                {entries.map((entry, index) => (
+                  <tr key={index} className="border-b border-gray-800">
+                    <td className="py-2">{entry.date}</td>
+                    <td className="py-2">{entry.count}</td>
+                    <td className="py-2">{entry.target || "N/A"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))
+      )}
     </div>
   );
 };

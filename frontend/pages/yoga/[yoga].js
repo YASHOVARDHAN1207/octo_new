@@ -82,10 +82,20 @@ const YogaPage = () => {
   }, [yoga]);
 
   async function saveProgress() {
-    localStorage.setItem(yoga, JSON.stringify(time));
+    const newEntry = {
+      yoga: yoga,
+      time: parseInt(time),
+      date: new Date().toLocaleString(),
+      target: targetTime,
+    };
+  
+    const existing = JSON.parse(sessionStorage.getItem("yoga_stats")) || [];
+    existing.push(newEntry);
+    sessionStorage.setItem("yoga_stats", JSON.stringify(existing));
   }
+
   async function fetchProgress() {
-    const progress = JSON.parse(localStorage.getItem(yoga));
+    const progress = JSON.parse(localStorageStorage.getItem(yoga));
     console.log("progress is", progress);
     setProg(progress);
   }

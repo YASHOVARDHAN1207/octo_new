@@ -236,8 +236,20 @@ function ExercisePage() {
     dir = 0;
   }
   async function saveProgress() {
-    localStorage.setItem(exercise, JSON.stringify(count));
+    sessionStorage.setItem(exercise, JSON.stringify(count));
+  
+    const newEntry = {
+      exercise,
+      count,
+      target: targetCount,
+      date: new Date().toLocaleDateString(),
+    };
+  
+    const existing = JSON.parse(sessionStorage.getItem("exercise_stats")) || [];
+    existing.push(newEntry);
+    sessionStorage.setItem("exercise_stats", JSON.stringify(existing));
   }
+
   async function fetchProgress() {
     const progress = JSON.parse(localStorage.getItem(exercise));
     console.log("progress is", progress);
