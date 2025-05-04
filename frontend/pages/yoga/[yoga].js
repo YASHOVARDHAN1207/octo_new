@@ -95,7 +95,7 @@ const YogaPage = () => {
   }
 
   async function fetchProgress() {
-    const progress = JSON.parse(localStorageStorage.getItem(yoga));
+    const progress = JSON.parse(localStorage.getItem(yoga));
     console.log("progress is", progress);
     setProg(progress);
   }
