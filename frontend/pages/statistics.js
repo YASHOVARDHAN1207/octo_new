@@ -1,4 +1,13 @@
 import React, { useEffect, useState } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 
 const StatisticsPage = () => {
   const [yogaData, setYogaData] = useState([]);
@@ -24,12 +33,37 @@ const StatisticsPage = () => {
   const groupedYoga = groupBy(yogaData, "yoga");
   const groupedExercise = groupBy(exerciseData, "exercise");
 
+  const yogaChartData = Object.entries(groupedYoga).map(([pose, entries]) => ({
+    name: pose,
+    openedCount: entries.length,
+  }));
+
+  const exerciseChartData = Object.entries(groupedExercise).map(([exercise, entries]) => ({
+    name: exercise,
+    totalReps: entries.reduce((sum, e) => sum + e.count, 0),
+  }));
+
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-white p-10">
       {/* Yoga Statistics */}
       <h1 className="text-4xl text-center mb-10 font-bold text-[#e3ffa8]">
         🧘 Your Yoga Statistics
       </h1>
+
+      {yogaChartData.length > 0 && (
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-center text-[#bdd76a] mb-4">Yoga Pose Time Chart</h2>
+          <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={yogaChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+  <CartesianGrid strokeDasharray="3 3" />
+  <XAxis dataKey="name" />
+  <YAxis />
+  <Tooltip />
+  <Bar dataKey="openedCount" fill="#e3ffa8" />
+</BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {Object.keys(groupedYoga).length === 0 ? (
         <p className="text-center text-xl text-gray-400">
@@ -84,6 +118,21 @@ const StatisticsPage = () => {
       <h1 className="text-4xl text-center my-10 font-bold text-[#e3ffa8]">
         🏋️‍♂️ Your Exercise Statistics
       </h1>
+
+      {exerciseChartData.length > 0 && (
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-center text-[#bdd76a] mb-4">Exercise Reps Chart</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={exerciseChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="totalReps" fill="#e3ffa8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
 
       {Object.keys(groupedExercise).length === 0 ? (
         <p className="text-center text-xl text-gray-400">

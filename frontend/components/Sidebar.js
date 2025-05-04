@@ -69,22 +69,13 @@ const Sidebar = ({ signOut }) => {
       <CryptoSwapModal />
 
       {/* Coins and Streak */}
-      <button
-        type="button"
-        className="flex items-center rounded-xl space-x-4 hover:bg-[#0a0a0b] text-orange-500 justify-start cursor-pointer transition-all duration-200 px-3 py-2 m-4 mt-auto"
-      >
-        <CurrencyDollarIcon className="h-8 w-8 text-orange-500" />
-        <span className="text-lg">{coins}</span>
-        <span className="ml-auto">Health Coins</span>
-      </button>
-      <button
-        type="button"
-        className="flex items-center rounded-xl space-x-4 hover:bg-[#0a0a0b] text-orange-500 justify-start cursor-pointer transition-all duration-200 px-3 py-2 m-4"
-      >
-        <FireIcon className="h-8 w-8 text-orange-500" />
-        <span className="text-lg">2</span>
-        <span className="ml-auto">Day Streak</span>
-      </button>
+
+      {/* <SidebarIcon
+        active={false}
+        onClickHandler={() => router.push("/exercise/selection")}
+        cta={true}
+        Icon={<PlusIcon className="h-8 w-8" />}
+      /> */}
 
       {/* Logout */}
       <SidebarIcon
