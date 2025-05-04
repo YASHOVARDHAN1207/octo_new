@@ -1,36 +1,38 @@
-import Sidebar from "../components/Sidebar";
-import "../styles/globals.css";
+// pages/_app.js
+
+import "../styles/globals.css"; // ✅ Global styles only
 import "@aws-amplify/ui-react/styles.css";
 import { Amplify } from "aws-amplify";
 import { Auth } from "aws-amplify";
 import { Authenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
+import Sidebar from "../components/Sidebar";
 import LandingPage from "../components/LandingPage";
 import { Toaster } from "react-hot-toast";
+
+// ❌ DON'T import Chatbot.css here anymore
+
+// ✅ Import your Chatbot component (CSS module is now inside it)
+import Chatbot from '../components/Chatbot';
 
 Amplify.configure({
   Auth: {
     region: process.env.NEXT_PUBLIC_REGION,
-
     userPoolId: process.env.NEXT_PUBLIC_USER_POOL_ID,
-
     userPoolWebClientId: process.env.NEXT_PUBLIC_USER_POOL_WEB_CLIENT_ID,
-
     mandatorySignIn: process.env.NEXT_PUBLIC_MANDATORY_SIGN_IN,
-
-    signUpVerificationMethod:
-      process.env.NEXT_PUBLIC_SIGNUP_VERIFICATION_METHOD,
+    signUpVerificationMethod: process.env.NEXT_PUBLIC_SIGNUP_VERIFICATION_METHOD,
   },
   ssr: true,
 });
 
-// You can get the current config object
 const currentConfig = Auth.configure();
 
 function MyApp({ Component, pageProps }) {
   const [login, setLogin] = useState(false);
+
   useEffect(() => {
-    // setLogin(false);
+    // Optional login logic
   }, []);
 
   return (
@@ -38,20 +40,23 @@ function MyApp({ Component, pageProps }) {
       <div className="h-full flex flex-col bg-[#0a0a0b]">
         <div className="flex">
           <Sidebar />
-          {/* {console.log("this is user", user)} */}
           <Toaster />
           <Component {...pageProps} />
         </div>
       </div>
-      {/* {login ? (
+
+      {/* Example static chatbot */}
+      <Chatbot />
+
+      {/* Uncomment this block to use Amplify authentication */}
+      {/*
+      {login ? (
         <div>
-        //signOut={signOut}
           <Authenticator>
             {({ signOut, user }) => (
               <div className="h-full flex flex-col bg-[#0a0a0b]">
                 <div className="flex">
                   <Sidebar signOut={signOut} />
-                  {console.log("this is user", user)}
                   <Toaster />
                   <Component {...pageProps} />
                 </div>
@@ -61,7 +66,8 @@ function MyApp({ Component, pageProps }) {
         </div>
       ) : (
         <LandingPage setLogin={setLogin} />
-      )} */}
+      )}
+      */}
     </div>
   );
 }

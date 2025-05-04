@@ -1,0 +1,79 @@
+.aicomponentContainer {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 650px;
+  margin: 40px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+
+.aicomponentContainer h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c7be5;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inputContainer textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  color: #333;
+  resize: vertical;
+}
+
+.inputContainer button {
+  background-color: #2c7be5;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.inputContainer button:disabled {
+  background-color: #a6b5c5;
+  cursor: not-allowed;
+}
+
+.inputContainer button:hover:not(:disabled) {
+  background-color: #1a5fd4;
+}
+
+.responseContainer {
+  margin-top: 20px;
+  background-color: #f1f3f5;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.loadingText {
+  color: #f59e0b;
+  font-style: italic;
+}
+
+.responseText {
+  color: #1f2937;
+}
+
+.errorMessage {
+  margin-top: 12px;
+  color: #e11d48;
+  font-weight: 600;
+}
